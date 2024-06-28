@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { slugify } from '@/utils/text';
 
 export const postSchema: Schema = new Schema(
@@ -13,6 +13,11 @@ export const postSchema: Schema = new Schema(
         description: {
             type: String,
             required: true,
+        },
+        category: {
+            type: mongoose.Types.ObjectId,
+            ref: "Category",
+            required: true
         },
     },
     {

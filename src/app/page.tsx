@@ -2,23 +2,27 @@
 
 import { useState, useEffect } from 'react';
 import Post from "@/components/Blog/Post";
-import { getAllPostsAction, postSeedAction} from '@/actions/post';
-import { Blog } from "@/interfaces";
+import { getAllPostsAction} from '@/actions/post';
+import { Post as BlogPost } from "@/interfaces";
 import Pagination from "@/components/Pagination";
+import { reponseParser } from '@/utils';
+import Demo from '@/components/Demo';
+import Categories from '@/components/Header/Categories';
+
 
 export default function Home() {
 
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [posts, setPost] = useState<BlogPost[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
 
-  const fetchBlogs = async (page: number) => {
+  const fetchPosts= async (page: number) => {
     setIsLoading(true);
     try {
       const result = await getAllPostsAction(page);
-      setBlogs(result.data);
+      setPost(reponseParser.getJSONResponse(result.data));
       setCurrentPage(result.currentPage);
       setTotalPages(result.totalPages);
     } catch (error) {
@@ -29,31 +33,26 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchBlogs(currentPage);
+    fetchPosts(currentPage);
   }, [currentPage]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
-
-  const onClickGenerate = async () => {
-    await postSeedAction();
-  }
-
-
   return (
     <div className="container">
+       <Categories/>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <div>
-            <button type='button' onClick={() => onClickGenerate() }>Seed</button>
-          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">            
-            {blogs.map((blog) => (
+          {/* <Demo/> */}
+          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">            
+            {posts.map((post) => (
               <Post
-                key={blog._id}
-                {...blog}
+                key={post._id}
+                {...post}
               />
             ))}
           </div>

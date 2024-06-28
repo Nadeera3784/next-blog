@@ -1,17 +1,11 @@
 'use server'
 
-import databaseConnector from '../../database';
-import { Post } from '../../database/models';
+import databaseConnector from '@/database';
+import { Post } from '@/database/models';
+import { reponseParser } from '@/utils';
 
 export async function getPostBySlugAction(slug: string){
     await databaseConnector();
-    const post =  await Post.findOne({'slug': slug});
-    return {
-        _id: post._id.toString(),
-        title: post.title,
-        slug: post.slug,
-        description: post.description,
-        createdAt: post.createdAt.toISOString(),
-        updatedAt: post.updatedAt.toISOString()
-    };
+    const post =  await Post.findOne({'slug': slug}).populate('category');
+    return reponseParser.setJSONResponse(post);
   }

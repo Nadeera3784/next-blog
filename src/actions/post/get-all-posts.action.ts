@@ -1,35 +1,27 @@
 'use server'
 
-import databaseConnector from '../../database';
-import { Post } from '../../database/models';
+import databaseConnector from '@/database';
+import { Post } from '@/database/models';
+import { reponseParser } from '@/utils';
 
-export async function getAllPostsAction(page: number = 1, limit: number = 10) {
-    await databaseConnector();
-    
-    const skip = (page - 1) * limit;
-    
-    const blogs = await Post.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
-    
-    const totalBlogs = await Post.countDocuments();
-    
+export async function getAllPostsAction(page: number = 1, limit: number = 9) {
+  await databaseConnector();
 
-    const serializedData = blogs.map(blog => ({
-      ...blog,
-      _id: blog._id.toString(),
-      createdAt: blog.createdAt.toISOString(),
-      updatedAt: blog.updatedAt.toISOString()
-    }));
+  const skip = (page - 1) * limit;
 
-    console.log('server action', serializedData);
-    
-    return {
-      data: serializedData,
-      currentPage: page,
-      totalPages: Math.ceil(totalBlogs / limit),
-      totalBlogs
-    };
-  }
+  const posts = await Post.find()
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .populate('category') 
+    .lean();
+
+  const totalBlogs = await Post.countDocuments();
+
+  return {
+    data: reponseParser.setJSONResponse(posts),
+    currentPage: page,
+    totalPages: Math.ceil(totalBlogs / limit),
+    totalBlogs
+  };
+}
