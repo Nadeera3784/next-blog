@@ -8,11 +8,9 @@ declare global {
   };
 }
 
-
 if (!environment.mongodbURI || environment.mongodbURI.length === 0) {
   throw new Error("Please add your MongoDB URI to .env.local");
 }
-
 
 let cached = global.mongoose;
 

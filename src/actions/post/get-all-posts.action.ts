@@ -1,8 +1,8 @@
-'use server'
+"use server";
 
-import databaseConnector from '@/database';
-import { Post } from '@/database/models';
-import { reponseParser } from '@/utils';
+import databaseConnector from "@/database";
+import { Post } from "@/database/models";
+import { reponseParser } from "@/utils";
 
 export async function getAllPostsAction(page: number = 1, limit: number = 9) {
   await databaseConnector();
@@ -13,7 +13,7 @@ export async function getAllPostsAction(page: number = 1, limit: number = 9) {
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit)
-    .populate('category') 
+    .populate("category")
     .lean();
 
   const totalBlogs = await Post.countDocuments();
@@ -22,6 +22,6 @@ export async function getAllPostsAction(page: number = 1, limit: number = 9) {
     data: reponseParser.setJSONResponse(posts),
     currentPage: page,
     totalPages: Math.ceil(totalBlogs / limit),
-    totalBlogs
+    totalBlogs,
   };
 }

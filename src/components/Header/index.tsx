@@ -10,8 +10,8 @@ export default function Header() {
             Getting Started with Tailkit
           </h2>
           <h3 className="text-lg md:text-xl md:leading-relaxed font-medium text-gray-600 lg:w-2/3 mx-auto">
-            Get to know how it can help you build the User Interface of your website
-            and web application with the minimal effort.
+            Get to know how it can help you build the User Interface of your
+            website and web application with the minimal effort.
           </h3>
         </div>
       </div>

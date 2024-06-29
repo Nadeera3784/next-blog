@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,16 +21,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-         
-          <Header/>
-          <Toaster position="top-right" closeButton />
-            <main>
-              {children}
-            </main>
-          <Footer/>      
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <Header />
+            <Toaster position="top-right" closeButton />
+            <main>{children}</main>
+            <Footer />
+          </div>
         </div>
-      </div>
       </body>
     </html>
   );
