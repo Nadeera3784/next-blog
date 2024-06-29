@@ -1,7 +1,7 @@
 "use server";
 
 import databaseConnector from "@/database";
-import { Post } from "@/database/models";
+import { PostModel } from "@/database/models";
 import { reponseParser } from "@/utils";
 
 export async function getAllPostsAction(page: number = 1, limit: number = 9) {
@@ -9,14 +9,14 @@ export async function getAllPostsAction(page: number = 1, limit: number = 9) {
 
   const skip = (page - 1) * limit;
 
-  const posts = await Post.find()
+  const posts = await PostModel.find()
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit)
     .populate("category")
     .lean();
 
-  const totalBlogs = await Post.countDocuments();
+  const totalBlogs = await PostModel.countDocuments();
 
   return {
     data: reponseParser.setJSONResponse(posts),

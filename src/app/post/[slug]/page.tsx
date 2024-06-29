@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import dayjs from "dayjs";
 
-import { getPostBySlugAction } from "@/actions/post";
+import { getPostBySlugAction, updatePostViewAction } from "@/actions/post";
 import { getCommentsByPostAction } from "@/actions/comment";
 import { Post, Comment } from "@/interfaces";
 import { reponseParser } from "@/utils";
@@ -37,6 +37,7 @@ export default function BlogDetails() {
       if (post?._id) {
         const data = await getCommentsByPostAction(post?._id);
         setComments(reponseParser.getJSONResponse(data));
+        await updatePostViewAction(post?._id);
       }
     } catch (error) {
       console.error("Error fetching comments:", error);

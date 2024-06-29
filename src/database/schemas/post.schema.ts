@@ -19,6 +19,10 @@ export const postSchema: Schema = new Schema(
       ref: "Category",
       required: true,
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
