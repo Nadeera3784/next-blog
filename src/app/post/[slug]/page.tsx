@@ -9,7 +9,7 @@ import { getPostBySlugAction, updatePostViewAction } from "@/actions/post";
 import { getCommentsByPostAction } from "@/actions/comment";
 import { Post, Comment } from "@/interfaces";
 import { reponseParser } from "@/utils";
-import { Comments, CommentForm } from "@/components/Blog";
+import { Comments, CommentForm } from "@/components/blog";
 
 export default function BlogDetails() {
   const urlParams = useParams();

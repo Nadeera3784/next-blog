@@ -1,13 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Post } from "@/components/Blog/Post";
+import { Post } from "@/components/blog";
 import { getAllPostsAction } from "@/actions/post";
 import { Post as BlogPost } from "@/interfaces";
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/pagination";
 import { reponseParser } from "@/utils";
-import Demo from "@/components/Demo";
-import Categories from "@/components/Header/Categories";
+import Demo from "@/components/demo";
+import Categories from "@/components/header/categories";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import LoginButton from "@/components/auth/login-btn";
 
 export default function Home() {
   const [posts, setPost] = useState<BlogPost[]>([]);
@@ -38,25 +41,30 @@ export default function Home() {
   };
 
   return (
-    <div className="container">
-      <Categories />
-      {<Demo />}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {posts.map((post) => (
-              <Post key={post._id} {...post} />
-            ))}
+    <div className="bg-white">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Header />
+        <Categories />
+        {<Demo />}
+        <LoginButton />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+              {posts.map((post) => (
+                <Post key={post._id} {...post} />
+              ))}
+            </div>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
           </div>
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
-        </div>
-      )}
+        )}
+        <Footer />
+      </div>
     </div>
   );
 }

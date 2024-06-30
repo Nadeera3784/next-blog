@@ -1,3 +1,3 @@
-export * from "./Comments";
+export * from "./comments";
 export * from "./Post";
-export * from "./CommentForm";
+export * from "./comment-form";

@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <div className="bg-white">
+    <div className="bg-gray-300">
       <div className="space-y-16 container xl:max-w-7xl mx-auto px-4 py-16 lg:px-8 lg:py-32">
         <div className="text-center">
           <div className="text-sm uppercase font-bold tracking-wider mb-1 text-indigo-700">

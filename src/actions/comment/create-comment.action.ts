@@ -1,14 +1,16 @@
 "use server";
 
+import * as z from "zod";
 import databaseConnector from "@/database";
 import { CommentModel } from "@/database/models";
-import { createCommentDto } from "@/dtos/comment";
 import { createCommentSchema } from "@/schemas";
 
-export async function createCommentAction(dto: createCommentDto) {
+export async function createCommentAction(
+  comment: z.infer<typeof createCommentSchema>,
+) {
   await databaseConnector();
   try {
-    const data = await createCommentSchema.parseAsync(dto);
+    const data = await createCommentSchema.parseAsync(comment);
     await CommentModel.create(data);
     return { sucess: true, message: "Comment has been added" };
   } catch (error) {
