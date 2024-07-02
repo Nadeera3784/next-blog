@@ -1,4 +1,4 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import mongodbClient from "@/utils/mongodbClient";
@@ -7,7 +7,7 @@ import { getUserByEmailAction } from "@/actions/auth";
 import bcrypt from "bcryptjs";
 import { environment } from "@/environments";
 
-const authOptions: AuthOptions = {
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -44,11 +44,6 @@ const authOptions: AuthOptions = {
       return true;
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.name = token.name;
-        session.user.email = token.email;
-      }
-
       return session;
     },
     async jwt({ token, user }) {
@@ -59,8 +54,6 @@ const authOptions: AuthOptions = {
   theme: {
     colorScheme: "light",
   },
-};
-
-const handler = NextAuth(authOptions);
+})
 
 export { handler as GET, handler as POST };
