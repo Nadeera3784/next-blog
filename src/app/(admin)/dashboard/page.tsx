@@ -1,6 +1,6 @@
 import Table from "@/components/admin/post-table";
 
-const Page = () => {  
+const Page = () => {
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <header>
@@ -15,7 +15,7 @@ const Page = () => {
         </div>
       </header>
       <div className="px-4 py-8 sm:px-0">
-        <Table/>
+        <Table />
       </div>
     </div>
   );
