@@ -3,3 +3,4 @@ export * from "./get-all-posts.action";
 export * from "./get-post.by-slug.action";
 export * from "./update-post-view.action";
 export * from "./delete-post.action";
+export * from "./creat-post.action";

@@ -6,6 +6,7 @@ import Pagination from "@/components/pagination";
 import { reponseParser } from "@/utils";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import Link from "next/link";
 
 export default function PostTable() {
   const [posts, setPost] = useState<BlogPost[]>([]);
@@ -61,9 +62,9 @@ export default function PostTable() {
           onChange={handleSearchChange}
           placeholder="search..."
         />
-        <button
+        <Link
+          href="/dashboard/post/create"
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ml-auto"
-          type="button"
         >
           <svg
             width={15}
@@ -81,7 +82,7 @@ export default function PostTable() {
             />
           </svg>
           New
-        </button>
+        </Link>
       </div>
       {isLoading ? (
         <p>Loading...</p>
@@ -141,7 +142,7 @@ export default function PostTable() {
                     {" "}
                     {dayjs(post.createdAt).format("YYYY-MM-DD")}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 space-x-2">
                     <button
                       onClick={() => onClickDelete(post._id)}
                       className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-7 w-7 rounded-[6px] [&_svg]:size-3.5"
@@ -166,6 +167,29 @@ export default function PostTable() {
                         <line x1={14} x2={14} y1={11} y2={17} />
                       </svg>
                     </button>
+
+                    <Link
+                      href={`/dashboard/post/${post._id}`}
+                      className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-7 w-7 rounded-[6px] [&_svg]:size-3.5"
+                    >
+                      <span className="sr-only">Edit</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={24}
+                        height={24}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-file-pen-line"
+                      >
+                        <path d="m18 5-2.414-2.414A2 2 0 0 0 14.172 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2" />
+                        <path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+                        <path d="M8 18h1" />
+                      </svg>
+                    </Link>
                   </td>
                 </tr>
               ))}

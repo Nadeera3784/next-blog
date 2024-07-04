@@ -12,8 +12,8 @@ export async function createCommentAction(
   try {
     const data = await createCommentSchema.parseAsync(comment);
     await CommentModel.create(data);
-    return { sucess: true, message: "Comment has been added" };
+    return { success: true, message: "Comment has been added" };
   } catch (error) {
-    return { sucess: false, message: error };
+    return { success: false, message: error };
   }
 }

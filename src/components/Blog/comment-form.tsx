@@ -23,7 +23,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
     },
   });
 
-  const onCommentFormSubmit = async (values: z.infer<typeof commentSchema>) => {
+  const onFormSubmit = async (values: z.infer<typeof commentSchema>) => {
     const validatedFields = commentSchema.safeParse(values);
 
     if (!validatedFields.success) {
@@ -53,7 +53,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
       <p className="text-sm text-gray-600 mb-4">
         Your email address will not be published. Required fields are marked *
       </p>
-      <form onSubmit={form.handleSubmit(onCommentFormSubmit)}>
+      <form onSubmit={form.handleSubmit(onFormSubmit)}>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label
