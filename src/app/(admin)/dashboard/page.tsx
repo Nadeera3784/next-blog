@@ -1,4 +1,4 @@
-import Table from "@/components/admin/post-table";
+import Table from "@/components/admin/post/post-table";
 
 const Page = () => {
   return (

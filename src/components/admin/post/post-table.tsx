@@ -1,12 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import Link from "next/link";
 import { getAllPostsAction, deletePostAction } from "@/actions/post";
 import { Post as BlogPost } from "@/interfaces";
 import Pagination from "@/components/pagination";
 import { reponseParser } from "@/utils";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import Link from "next/link";
 
 export default function PostTable() {
   const [posts, setPost] = useState<BlogPost[]>([]);

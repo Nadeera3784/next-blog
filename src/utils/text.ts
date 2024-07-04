@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export function slugify(text: string) {
   return text
     .toString()
@@ -15,4 +17,8 @@ export function truncate(str: string, num: number) {
   } else {
     return str;
   }
+}
+
+export function stringToObjectId(id: string) {
+  return new mongoose.Types.ObjectId(id);
 }

@@ -1,6 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import EditPostFrom from "@/components/admin/post/edit-post-form";
 
 const Page = () => {
+  const urlParams = useParams();
+
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <header>
@@ -14,7 +20,7 @@ const Page = () => {
             <div>
               <Link
                 href={`/dashboard`}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-black text-white hover:bg-accent hover:bg-black/90 h-10 px-4 py-2 ml-auto"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ml-auto"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +43,7 @@ const Page = () => {
           </div>
         </div>
       </header>
-      <div className="px-4 py-8 sm:px-0">Edit Post</div>
+      {urlParams?.id && <EditPostFrom id={urlParams?.id} />}
     </div>
   );
 };
