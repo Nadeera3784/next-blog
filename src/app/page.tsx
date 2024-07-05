@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Post } from "@/components/blog";
-import { getAllPostsAction } from "@/actions/post";
+import { getPostsWithPaginationAction } from "@/actions/post";
 import { Post as BlogPost } from "@/interfaces";
 import Pagination from "@/components/pagination";
 import { reponseParser } from "@/utils";
@@ -21,7 +21,7 @@ export default function Home() {
   const fetchPosts = async (page: number) => {
     setIsLoading(true);
     try {
-      const result = await getAllPostsAction(page);
+      const result = await getPostsWithPaginationAction(page);
       setPost(reponseParser.getJSONResponse(result.data));
       setCurrentPage(result.currentPage);
       setTotalPages(result.totalPages);

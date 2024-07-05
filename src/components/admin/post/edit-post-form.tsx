@@ -6,11 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { createPostSchema as updatePostSchema } from "@/schemas";
-import {
-  createPostAction,
-  getPostByIdAction,
-  updatePostByIdaction,
-} from "@/actions/post";
+import { getPostByIdAction, updatePostByIdaction } from "@/actions/post";
 import { getAllCategoriesAction } from "@/actions/category";
 import { reponseParser } from "@/utils";
 import { Category, Post } from "@/interfaces";

@@ -4,7 +4,7 @@ import databaseConnector from "@/database";
 import { PostModel } from "@/database/models";
 import { reponseParser } from "@/utils";
 
-export async function getAllPostsAction(
+export async function getPostsWithPaginationAction(
   page: number = 1,
   limit: number = 9,
   search: string = "",
@@ -25,12 +25,12 @@ export async function getAllPostsAction(
     .populate("category")
     .lean();
 
-  const totalBlogs = await PostModel.countDocuments(query);
+  const totalCount = await PostModel.countDocuments(query);
 
   return {
     data: reponseParser.setJSONResponse(posts),
     currentPage: page,
-    totalPages: Math.ceil(totalBlogs / limit),
-    totalBlogs,
+    totalPages: Math.ceil(totalCount / limit),
+    totalCount,
   };
 }

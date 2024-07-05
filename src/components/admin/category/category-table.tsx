@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { getPostsWithPaginationAction, deletePostAction } from "@/actions/post";
-import { Post as BlogPost } from "@/interfaces";
+import {
+  getCategoriesWithPaginationAction,
+  deleteCategoryAction,
+} from "@/actions/category";
+import { Category } from "@/interfaces";
 import Pagination from "@/components/pagination";
 import { reponseParser } from "@/utils";
 
-export default function PostTable() {
-  const [posts, setPost] = useState<BlogPost[]>([]);
+export default function CategoryTable() {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +22,8 @@ export default function PostTable() {
   const fetchPosts = async (page: number, search: string) => {
     setIsLoading(true);
     try {
-      const result = await getPostsWithPaginationAction(page, 10, search);
-      setPost(reponseParser.getJSONResponse(result.data));
+      const result = await getCategoriesWithPaginationAction(page, 10, search);
+      setCategories(reponseParser.getJSONResponse(result.data));
       setCurrentPage(result.currentPage);
       setTotalPages(result.totalPages);
     } catch (error) {
@@ -45,7 +48,7 @@ export default function PostTable() {
 
   const onClickDelete = async (id: string) => {
     if (confirm("Are you sure want to delete this?") == true) {
-      const result = await deletePostAction(id);
+      const result = await deleteCategoryAction(id);
       if (result.sucess) {
         setRefresh(refresh + 1);
       }
@@ -63,7 +66,7 @@ export default function PostTable() {
           placeholder="search..."
         />
         <Link
-          href="/dashboard/post/create"
+          href="/dashboard/categories/create"
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ml-auto"
         >
           <svg
@@ -95,19 +98,7 @@ export default function PostTable() {
                   scope="col"
                   className="px-6 py-3 font-medium text-xs text-muted"
                 >
-                  Title
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 font-medium text-xs text-muted"
-                >
-                  Views
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 font-medium text-xs text-muted"
-                >
-                  Category
+                  Name
                 </th>
                 <th
                   scope="col"
@@ -124,27 +115,20 @@ export default function PostTable() {
               </tr>
             </thead>
             <tbody>
-              {posts.map((post) => (
+              {categories.map((category) => (
                 <tr
-                  key={post._id}
+                  key={category._id}
                   className="bg-white border-b  hover:bg-gray-50"
                 >
                   <th scope="row" className="px-6 py-4">
-                    {post.title}
+                    {category.name}
                   </th>
-                  <td className="px-6 py-4">{post?.views}</td>
                   <td className="px-6 py-4">
-                    <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
-                      {post?.category.name}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    {" "}
-                    {dayjs(post.createdAt).format("YYYY-MM-DD")}
+                    {dayjs(category?.createdAt).format("YYYY-MM-DD")}
                   </td>
                   <td className="px-6 py-4 space-x-2">
                     <button
-                      onClick={() => onClickDelete(post._id)}
+                      onClick={() => onClickDelete(category._id)}
                       className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-7 w-7 rounded-[6px] [&_svg]:size-3.5"
                     >
                       <span className="sr-only">Delete</span>
@@ -169,7 +153,7 @@ export default function PostTable() {
                     </button>
 
                     <Link
-                      href={`/dashboard/post/${post._id}`}
+                      href={`/dashboard/categories/${category._id}`}
                       className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-7 w-7 rounded-[6px] [&_svg]:size-3.5"
                     >
                       <span className="sr-only">Edit</span>
