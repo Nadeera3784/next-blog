@@ -6,7 +6,6 @@ import { SignInSchema } from "@/schemas";
 import { getUserByEmailAction } from "@/actions/auth";
 import bcrypt from "bcryptjs";
 import { environment } from "@/environments";
-
 const handler = NextAuth({
   providers: [
     CredentialsProvider({

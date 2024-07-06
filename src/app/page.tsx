@@ -6,11 +6,9 @@ import { getPostsWithPaginationAction } from "@/actions/post";
 import { Post as BlogPost } from "@/interfaces";
 import Pagination from "@/components/pagination";
 import { reponseParser } from "@/utils";
-import Demo from "@/components/demo";
-import Categories from "@/components/header/categories";
+import Categories from "@/components/header/Categories";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import LoginButton from "@/components/auth/login-btn";
 
 export default function Home() {
   const [posts, setPost] = useState<BlogPost[]>([]);
@@ -45,8 +43,6 @@ export default function Home() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Header />
         <Categories />
-        {<Demo />}
-        <LoginButton />
         {isLoading ? (
           <p>Loading...</p>
         ) : (

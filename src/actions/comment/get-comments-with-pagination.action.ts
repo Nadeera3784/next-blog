@@ -1,10 +1,10 @@
 "use server";
 
 import databaseConnector from "@/database";
-import { CategoryModel } from "@/database/models";
+import { CommentModel } from "@/database/models";
 import { reponseParser } from "@/utils";
 
-export async function getCategoriesWithPaginationAction(
+export async function getCommentsWithPaginationAction(
   page: number = 1,
   limit: number = 10,
   search: string = "",
@@ -18,16 +18,17 @@ export async function getCategoriesWithPaginationAction(
     query = { name: { $regex: search, $options: "i" } };
   }
 
-  const categories = await CategoryModel.find(query)
+  const comments = await CommentModel.find(query)
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit)
+    .populate("post")
     .lean();
 
-  const totalCount = await CategoryModel.countDocuments(query);
+  const totalCount = await CommentModel.countDocuments(query);
 
   return {
-    data: reponseParser.setJSONResponse(categories),
+    data: reponseParser.setJSONResponse(comments),
     currentPage: page,
     totalPages: Math.ceil(totalCount / limit),
     totalCount,

@@ -14,7 +14,7 @@ export default function Footer() {
           </a>
         </nav>
         <div className="text-gray-600">
-          <span className="font-medium">Company Inc</span> ©
+          <span className="font-medium">Next Blog</span> ©
         </div>
       </div>
     </footer>

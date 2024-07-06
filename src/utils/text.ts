@@ -22,3 +22,15 @@ export function truncate(str: string, num: number) {
 export function stringToObjectId(id: string) {
   return new mongoose.Types.ObjectId(id);
 }
+
+export function getInitials(name: string | undefined) {
+  if (name == "undefined") {
+    return name;
+  }
+  const words = name.split(" ");
+  if (words.length === 1) {
+    return words[0][0].toUpperCase();
+  } else {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+}
